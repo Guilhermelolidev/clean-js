@@ -1,8 +1,8 @@
 module.exports = function cadastrarUsuarioUseCase() {
-  return async function ({ nome_completo, CPF, telefone, endereco, email }) {
+  return async function ({ nome_completo, cpf, telefone, endereco, email }) {
     await usuariosRepository.cadastrar({
       nome_completo,
-      CPF,
+      cpf,
       telefone,
       endereco,
       email,
