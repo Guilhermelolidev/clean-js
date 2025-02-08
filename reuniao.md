@@ -36,3 +36,7 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 retorno mais antiga
 
 <!-- Estruturas -->
+
+<!-- Usuarios Repository -->
+
+[] cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
