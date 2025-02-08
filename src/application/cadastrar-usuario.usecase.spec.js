@@ -1,3 +1,4 @@
+const { Either } = require('../shared/errors');
 const AppError = require('../shared/errors/AppError');
 const cadastrarUsuarioUsecase = require('./cadastrar-usuario.usecase');
 
@@ -19,7 +20,7 @@ describe('Cadastrar usuario UseCase', function () {
     const sut = cadastrarUsuarioUsecase({ usuariosRepository });
     const output = await sut(usuarioDTO);
 
-    expect(output).toBeUndefined();
+    expect(output.right).toBeNull();
     expect(usuariosRepository.cadastrar).toHaveBeenCalledWith(usuarioDTO);
     expect(usuariosRepository.cadastrar).toHaveBeenCalledTimes(1);
   });
@@ -48,8 +49,12 @@ describe('Cadastrar usuario UseCase', function () {
     };
 
     const sut = cadastrarUsuarioUsecase({ usuariosRepository });
-    expect(() => sut(usuarioDTO)).rejects.toThrow(
-      new AppError('CPF já cadastrado')
+    const output = await sut(usuarioDTO);
+    expect(output.right).toBeNull();
+    expect(output.left).toEqual(Either.valorJaCadastrado('CPF'));
+    expect(usuariosRepository.buscarPorCPF).toHaveBeenCalledWith(
+      usuarioDTO.CPF
     );
+    expect(usuariosRepository.buscarPorCPF).toHaveBeenCalledTimes(1);
   });
 });
