@@ -11,7 +11,7 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 
 <!-- UseCases (Regras de negócio) -->
 
-[] Cadastrar um novo usuário
+[x] Cadastrar um novo usuário
 [] - CPF ou email devem ser únicos
 
 [] Buscar um cadastro de usuário por CPF
