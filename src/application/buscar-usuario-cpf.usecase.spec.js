@@ -1,4 +1,4 @@
-const { AppError } = require('../shared/errors');
+const { AppError, Either } = require('../shared/errors');
 const buscarUsuarioCpfUsecase = require('./buscar-usuario-cpf.usecase');
 
 describe('Buscar Usuario Por CPF UseCase', function () {
@@ -11,18 +11,26 @@ describe('Buscar Usuario Por CPF UseCase', function () {
   });
 
   test('Deve retornar o usuario encontrado', async function () {
-    const CPF = 'cpf_valido';
-    const usuarioDTO = {
+    const cpfDTO = {
+      CPF: 'CPF_cadastrado',
+    };
+    const outputDTO = {
       nome_completo: 'nome_valido',
-      CPF: 'cpf_valido',
+      CPF: 'CPF_cadastrado',
       telefone: 'telefone_valido',
       endereco: 'endereco_valido',
       email: 'email_valido',
     };
-    usuariosRepository.buscarUsuarioPorCPF.mockResolvedValue(usuarioDTO);
+
+    usuariosRepository.buscarUsuarioPorCPF.mockResolvedValue(outputDTO);
+
     const sut = buscarUsuarioCpfUsecase({ usuariosRepository });
-    const output = await sut({ CPF });
-    expect(output).toBe(usuarioDTO);
+    const output = await sut(cpfDTO);
+    expect(output.right).toEqual(outputDTO);
+    expect(usuariosRepository.buscarUsuarioPorCPF).toHaveBeenCalledWith(
+      cpfDTO.CPF
+    );
+    expect(usuariosRepository.buscarUsuarioPorCPF).toHaveBeenCalledTimes(1);
   });
 
   test('Deve retornar null se o usuario não for encontrado', async function () {

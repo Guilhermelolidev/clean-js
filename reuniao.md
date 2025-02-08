@@ -17,8 +17,8 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 [x] Buscar um cadastro de usuário por CPF
 [x] - Retornar um usuario ou vazio
 
-[] Cadastrar um novo livro
-[] - ISBN deve ser unico
+[x] Cadastrar um novo livro
+[x] - ISBN deve ser unico
 
 [] Buscar um livro por nome ou ISBN
 [] - Retornar os livros ou vazio
@@ -42,3 +42,8 @@ retorno mais antiga
 [] cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
 [] buscarPorCPF(CPF) => Promise<boolean>
 [] buscarPorEmail(email) => Promise<boolean>
+
+<!-- Livros Repository -->
+
+[] cadastrar: ({ nome, quantidade, autor, genero, ISBN }) => Promise<boolean>
+[] buscarLivroPorISBN: (ISGN) => Promise<boolean>
