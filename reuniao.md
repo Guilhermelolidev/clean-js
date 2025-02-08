@@ -14,8 +14,8 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 [x] Cadastrar um novo usuário
 [x] - CPF ou email devem ser únicos
 
-[] Buscar um cadastro de usuário por CPF
-[] - Retornar um usuario ou vazio
+[x] Buscar um cadastro de usuário por CPF
+[x] - Retornar um usuario ou vazio
 
 [] Cadastrar um novo livro
 [] - ISBN deve ser unico

@@ -38,7 +38,6 @@ describe('Cadastrar usuario UseCase', function () {
   });
 
   test('Deve existir um erro se já existir um cadastro com o CPF recebido', async function () {
-    // quando tem retorno de um metodo para uma variavel, usar mock
     usuariosRepository.buscarPorCPF.mockResolvedValue(true);
 
     const usuarioDTO = {
@@ -60,7 +59,6 @@ describe('Cadastrar usuario UseCase', function () {
   });
 
   test('Deve existir um erro se já existir um cadastro com o Email recebido', async function () {
-    // quando tem retorno de um metodo para uma variavel, usar mock
     usuariosRepository.buscarPorCPF.mockResolvedValue(false);
     usuariosRepository.buscarPorEmail.mockResolvedValue(true);
 
