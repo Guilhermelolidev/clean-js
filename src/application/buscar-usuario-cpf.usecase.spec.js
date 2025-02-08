@@ -33,15 +33,21 @@ describe('Buscar Usuario Por CPF UseCase', function () {
     expect(usuariosRepository.buscarUsuarioPorCPF).toHaveBeenCalledTimes(1);
   });
 
-  test('Deve retornar null se o usuario não for encontrado', async function () {
-    const CPF = 'cpf_valido';
+  test('Deve retornar null se nao existir nenhum usuario com o CPF informado', async function () {
+    const cpfDTO = {
+      CPF: 'cpf_valido',
+    };
     usuariosRepository.buscarUsuarioPorCPF.mockResolvedValue(null);
     const sut = buscarUsuarioCpfUsecase({ usuariosRepository });
-    const output = await sut({ CPF });
-    expect(output).toBeNull();
+    const output = await sut(cpfDTO);
+    expect(output.right).toBeNull();
+    expect(usuariosRepository.buscarUsuarioPorCPF).toHaveBeenCalledWith(
+      cpfDTO.CPF
+    );
+    expect(usuariosRepository.buscarUsuarioPorCPF).toHaveBeenCalledTimes(1);
   });
 
-  test('Deve retornar um throw AppError se os campos obrigatorios nao forem fornecidos', async function () {
+  test('Deve retornar um throw AppError se os campos obrigatorios não forem fornecidos', async function () {
     const sut = buscarUsuarioCpfUsecase({ usuariosRepository });
     await expect(() => sut({})).rejects.toThrow(
       new AppError(AppError.parametrosObrigatorios)

@@ -8,7 +8,7 @@ module.exports = function buscarUsuarioPorCPFUseCase({ usuariosRepository }) {
 
     const usuario = await usuariosRepository.buscarUsuarioPorCPF(CPF);
 
-    if (!usuario) return null;
+    if (!usuario) return Either.Right(null);
 
     return Either.Right(usuario);
   };
