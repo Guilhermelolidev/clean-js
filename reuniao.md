@@ -12,7 +12,7 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 <!-- UseCases (Regras de negócio) -->
 
 [x] Cadastrar um novo usuário
-[] - CPF ou email devem ser únicos
+[x] - CPF ou email devem ser únicos
 
 [] Buscar um cadastro de usuário por CPF
 [] - Retornar um usuario ou vazio
@@ -40,3 +40,5 @@ retorno mais antiga
 <!-- Usuarios Repository -->
 
 [] cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
+[] buscarPorCPF(CPF) => Promise<boolean>
+[] buscarPorEmail(email) => Promise<boolean>

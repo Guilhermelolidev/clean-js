@@ -13,6 +13,11 @@ module.exports = function cadastrarUsuarioUseCase({ usuariosRepository }) {
 
     if (CPFJaCadastrado) return Either.Left(Either.valorJaCadastrado('CPF'));
 
+    const EmailJaCadastrado = await usuariosRepository.buscarPorEmail(email);
+
+    if (EmailJaCadastrado)
+      return Either.Left(Either.valorJaCadastrado('Email'));
+
     await usuariosRepository.cadastrar({
       nome_completo,
       CPF,
