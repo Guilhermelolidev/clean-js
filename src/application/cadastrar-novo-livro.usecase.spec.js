@@ -8,7 +8,9 @@ describe('Cadastrar novo livro UseCase', function () {
   };
 
   test('Deve retornar um throw AppError se o livrosRepository não for fornecido', function () {
-    expect(() => cadastrarNovoLivroUsecase({})).toThrow(AppError.dependencias);
+    expect(() => cadastrarNovoLivroUsecase({})).toThrow(
+      new AppError(AppError.dependencias)
+    );
   });
 
   test('Deve retornar um throw AppError se os campos obrigatorios nao forem fornecidos', function () {
@@ -23,7 +25,7 @@ describe('Cadastrar novo livro UseCase', function () {
     livrosRepository.buscarLivroPorISBN.mockResolvedValue(true);
     const livroDTO = {
       nome: 'livro_valido',
-      quantidade: 1,
+      quantidade: 'quantidade_valida',
       autor: 'autor_valido',
       genero: 'genero valido',
       ISBN: 'isbn_ja_existe',
@@ -31,13 +33,17 @@ describe('Cadastrar novo livro UseCase', function () {
     const sut = cadastrarNovoLivroUsecase({ livrosRepository });
     const output = await sut(livroDTO);
     expect(output.left).toEqual(Either.valorJaCadastrado('ISBN'));
+    expect(livrosRepository.buscarLivroPorISBN).toHaveBeenCalledTimes(1);
+    expect(livrosRepository.buscarLivroPorISBN).toHaveBeenCalledWith(
+      livroDTO.ISBN
+    );
   });
 
   test('Deve cadastrar um novo livro', async function () {
     livrosRepository.buscarLivroPorISBN.mockResolvedValue(false);
     const livroDTO = {
       nome: 'livro_valido',
-      quantidade: 1,
+      quantidade: 'quantidade_valida',
       autor: 'autor_valido',
       genero: 'genero valido',
       ISBN: 'isbn_valido',
