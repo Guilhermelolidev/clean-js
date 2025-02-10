@@ -1,4 +1,4 @@
-const { AppError, Either } = require('../shared/errors');
+const { AppError } = require('../shared/errors');
 const buscarUsuarioCpfUsecase = require('./buscar-usuario-cpf.usecase');
 
 describe('Buscar Usuario Por CPF UseCase', function () {
@@ -47,9 +47,10 @@ describe('Buscar Usuario Por CPF UseCase', function () {
     expect(usuariosRepository.buscarUsuarioPorCPF).toHaveBeenCalledTimes(1);
   });
 
-  test('Deve retornar um throw AppError se os campos obrigatorios não forem fornecidos', async function () {
+  test('Deve retornar um throw AppError se o CPF não for fornecido', async function () {
     const sut = buscarUsuarioCpfUsecase({ usuariosRepository });
-    await expect(() => sut({})).rejects.toThrow(
+    const output = sut({});
+    await expect(output).rejects.toThrow(
       new AppError(AppError.parametrosObrigatorios)
     );
   });
