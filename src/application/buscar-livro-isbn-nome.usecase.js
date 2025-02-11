@@ -8,10 +8,8 @@ module.exports = function buscarLivroPorISBNOuNomeUseCase({
   return async function ({ valor }) {
     if (!valor) throw new AppError(AppError.parametrosObrigatorios);
 
-    const results = await livrosRepository.buscarLivroPorNomeOuISBN(valor);
+    const livros = await livrosRepository.buscarLivroPorNomeOuISBN(valor);
 
-    if (!results) return Either.Right([]);
-
-    return Either.Right(results);
+    return Either.Right(livros);
   };
 };

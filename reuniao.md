@@ -20,13 +20,13 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 [x] Cadastrar um novo livro
 [x] - ISBN deve ser unico
 
-[] Buscar um livro por nome ou ISBN
-[] - Retornar os livros ou vazio
+[x] Buscar um livro por nome ou ISBN
+[x] - Retornar os livros ou vazio
 
-[] Emprestar um livro ao usuario
-[] - A data de retorno nao pode ser menor que a data de saida
-[] - Um usuario nao pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
-[] - Um usuario pode estar com mais de um livro com ISBN diferentes ao mesmo tempo
+[x] Emprestar um livro ao usuario
+[x] - A data de retorno nao pode ser menor que a data de saida
+[x] - Um usuario nao pode estar com mais de um livro com o mesmo ISBN ao mesmo tempo
+[x] - Um usuario pode estar com mais de um livro com ISBN diferentes ao mesmo tempo
 [] - Ao cadastrar um empréstimo, será enviado um email automaticamente informando o nome do livro, nome de usuario, CPF, data de saida e a data de retorno
 
 [] Devolver o livro emprestado
@@ -45,6 +45,11 @@ retorno mais antiga
 
 <!-- Livros Repository -->
 
-[] cadastrar: ({ nome, quantidade, autor, genero, ISBN }) => Promise<boolean>
+[] cadastrar: ({ nome, quantidade, autor, genero, ISBN }) => Promise<void>
 [] buscarLivroPorISBN: (ISBN) => Promise<boolean>
-[] buscarLivroPorNomeOuISBN: ({ ISBN, nome }) => Promise<boolean>
+[] buscarLivroPorNomeOuISBN: (valor) => Promise<array<Livro>>
+
+<!-- Emprestimos Repository -->
+
+[] cadastrar: ({usuario_id, livro_id, data_retorno, data_devolucao, data_saida}) => promise<void>
+[] verificaSeUsuarioJaAlugouOlivro: (usuario_id, livro_id) => promise<emprestimo | null>

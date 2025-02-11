@@ -22,7 +22,7 @@ describe('Buscar livro por ISBN ou nome UseCase', function () {
   });
 
   test('Deve retornar um array vazio caso livro não seja encontrado por ISBN ou nome', async function () {
-    livrosRepository.buscarLivroPorNomeOuISBN.mockResolvedValue(null);
+    livrosRepository.buscarLivroPorNomeOuISBN.mockResolvedValue([]);
     const inputDTO = {
       valor: 'valor_valido',
     };
