@@ -15,13 +15,13 @@ module.exports = function emprestarLivroProUsuarioUseCase({
     const parametrosObrigatorios =
       usuario_id && livro_id && data_retorno && data_devolucao && data_saida;
 
-    if (!parametrosObrigatorios)
+    if (!parametrosObrigatorios) {
       throw new AppError(AppError.parametrosObrigatorios);
+    }
 
-    if (new Date(data_retorno) < new Date(data_saida))
-      throw new AppError(
-        'A data de retorno não pode ser menor que a data de saída'
-      );
+    if (data_saida.getTime() > data_retorno.getTime()) {
+      return Either.Left(Either.dataRetornoMenorQueDataSaida);
+    }
 
     const usuarioJaAlugou =
       await emprestimosRepository.verificaSeUsuarioJaAlugouOlivro({
@@ -30,10 +30,10 @@ module.exports = function emprestarLivroProUsuarioUseCase({
       });
 
     if (usuarioJaAlugou) {
-      throw new AppError('Esse usuário já está com o livro alugado!');
+      return Either.Left(Either.livroJaFoiAlugado);
     }
 
-    await emprestimosRepository.cadastrar({
+    await emprestimosRepository.emprestar({
       usuario_id,
       livro_id,
       data_retorno,

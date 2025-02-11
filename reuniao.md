@@ -51,5 +51,5 @@ retorno mais antiga
 
 <!-- Emprestimos Repository -->
 
-[] cadastrar: ({usuario_id, livro_id, data_retorno, data_devolucao, data_saida}) => promise<void>
+[] emprestar: ({ usuario_id, livro_id, data_retorno, data_devolucao, data_saida }) => promise<void>
 [] verificaSeUsuarioJaAlugouOlivro: (usuario_id, livro_id) => promise<emprestimo | null>

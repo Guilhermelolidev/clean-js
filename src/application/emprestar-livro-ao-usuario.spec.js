@@ -1,16 +1,11 @@
-const { AppError } = require('../shared/errors');
+const { AppError, Either } = require('../shared/errors');
 const emprestarLivroAoUsuarioUsecase = require('./emprestar-livro-ao-usuario.usecase');
 
 describe('Emprestar livro para o usuário UseCase', function () {
   const emprestimosRepository = {
-    cadastrar: jest.fn(),
+    emprestar: jest.fn(),
     verificaSeUsuarioJaAlugouOlivro: jest.fn(),
   };
-
-  beforeEach(() => {
-    emprestimosRepository.cadastrar.mockClear();
-    emprestimosRepository.verificaSeUsuarioJaAlugouOlivro.mockClear();
-  });
 
   test('Deve retornar um throw App Error se o emprestimosRepository não for fornecido', () => {
     expect(() => emprestarLivroAoUsuarioUsecase({})).toThrow(
@@ -27,41 +22,40 @@ describe('Emprestar livro para o usuário UseCase', function () {
     );
   });
 
-  test('Deve retornar um throw new AppError se a data de retorno for menor que a data de saída', async () => {
+  test('Deve retornar um Either.left se a data de retorno for menor que a data de saída', async () => {
     const sut = emprestarLivroAoUsuarioUsecase({ emprestimosRepository });
 
     const inputDTO = {
-      usuario_id: 1,
-      livro_id: 111,
-      data_retorno: '2025-02-09',
-      data_devolucao: '2025-02-15',
-      data_saida: '2025-02-10',
+      usuario_id: 'usuario_valido',
+      livro_id: 'livro_valido',
+      data_retorno: new Date('2025-01-01'),
+      data_devolucao: new Date('2025-01-02'),
+      data_saida: new Date('2025-01-02'),
     };
+    const output = await sut(inputDTO);
 
-    await expect(sut(inputDTO)).rejects.toThrow(
-      new AppError('A data de retorno não pode ser menor que a data de saída')
-    );
+    expect(output.left).toBe(Either.dataRetornoMenorQueDataSaida);
   });
 
-  test('Deve retornar um throw new AppError se o usuario tentar alugar um livro com o mesmo ISBN', async () => {
+  test('Deve retornar um Either.left se o usuario tentar alugar um livro com o mesmo ISBN', async () => {
     const sut = emprestarLivroAoUsuarioUsecase({ emprestimosRepository });
     emprestimosRepository.verificaSeUsuarioJaAlugouOlivro.mockResolvedValue(
       true
     );
 
     const inputDTO = {
-      usuario_id: 1,
-      livro_id: 111,
-      data_retorno: '2025-02-11',
-      data_devolucao: '2025-02-15',
-      data_saida: '2025-02-10',
+      usuario_id: 'usuario_valido',
+      livro_id: 'livro_valido',
+      data_retorno: new Date('2025-01-02'),
+      data_devolucao: new Date('2025-01-02'),
+      data_saida: new Date('2025-01-01'),
     };
 
-    await expect(sut(inputDTO)).rejects.toThrow(
-      new AppError('Esse usuário já está com o livro alugado!')
-    );
+    const output = await sut(inputDTO);
 
-    expect(emprestimosRepository.cadastrar).not.toHaveBeenCalled();
+    expect(output.left).toBe(Either.livroJaFoiAlugado);
+
+    expect(emprestimosRepository.emprestar).not.toHaveBeenCalled();
   });
 
   test('Emprestar livro pro usuário', async () => {
@@ -71,15 +65,15 @@ describe('Emprestar livro para o usuário UseCase', function () {
     const inputDTO = {
       usuario_id: 'usuario_valido',
       livro_id: 'livro_valido',
-      data_retorno: 'data_retorno_valido',
-      data_devolucao: 'data_devoluacao_valido',
-      data_saida: 'data_saida_valida',
+      data_retorno: new Date('2025-01-02'),
+      data_devolucao: new Date('2025-01-02'),
+      data_saida: new Date('2025-01-01'),
     };
     const sut = emprestarLivroAoUsuarioUsecase({ emprestimosRepository });
     const output = await sut(inputDTO);
 
     expect(output.right).toBeNull();
-    expect(emprestimosRepository.cadastrar).toHaveBeenCalledTimes(1);
-    expect(emprestimosRepository.cadastrar).toHaveBeenCalledWith(inputDTO);
+    expect(emprestimosRepository.emprestar).toHaveBeenCalledTimes(1);
+    expect(emprestimosRepository.emprestar).toHaveBeenCalledWith(inputDTO);
   });
 });
