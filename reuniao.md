@@ -52,4 +52,4 @@ retorno mais antiga
 <!-- Emprestimos Repository -->
 
 [] emprestar: ({ usuario_id, livro_id, data_retorno, data_devolucao, data_saida }) => promise<void>
-[] verificaSeUsuarioJaAlugouOlivro: (usuario_id, livro_id) => promise<emprestimo | null>
+[] verificaSeUsuarioJaAlugouOlivro: ({ usuario_id, livro_id }) => promise<boolean>
