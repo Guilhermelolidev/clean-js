@@ -32,7 +32,7 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 [x] Devolver o livro emprestado (sem multa)
 [x] - Caso o usuario tenha atrasado, será gerado uma multa fixa de R$ 10,00
 
-[] Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuario, CPF, data de saida, data de retorno. Ordenados pela data de
+[x] Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuario, CPF, data de saida, data de retorno. Ordenados pela data de
 retorno mais antiga
 
 <!-- Estruturas -->
@@ -55,3 +55,4 @@ retorno mais antiga
 [] verificaSeUsuarioJaAlugouOlivro: ({ usuario_id, livro_id }) => Promise<boolean>
 [] buscarEmprestimoComLivroEUsuarioPorID: (id) => Promise<emprestimo & {Livro{nome}, Usuario{nome_completo}, CPF, email}>
 [] devolver: ({ emprestimo_id, data_retorno }) => Promise<{data_retorno}>
+[] buscarPendentesComLivroComUsuario: () => Promise<emprestimos: { data_saida, data_retorno, & Livro: { Nome }, Usuario: { nome_completo, CPF } }>
