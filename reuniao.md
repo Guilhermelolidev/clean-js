@@ -46,8 +46,8 @@ retorno mais antiga
 
 <!-- Livros Repository -->
 
-[] cadastrar: ({ nome, quantidade, autor, genero, ISBN }) => Promise<void>
-[] buscarLivroPorISBN: (ISBN) => Promise<boolean>
+[x] cadastrar: ({ nome, quantidade, autor, genero, ISBN }) => Promise<void>
+[x] buscarLivroPorISBN: (ISBN) => Promise<boolean>
 [] buscarLivroPorNomeOuISBN: (valor) => Promise<array<Livro>>
 
 <!-- Emprestimos Repository -->

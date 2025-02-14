@@ -26,4 +26,17 @@ describe('Livro Repository', () => {
     const livroCadastrado = await sut.cadastrar(livroDTO);
     expect(livroCadastrado).toBeUndefined();
   });
+
+  test('Deve retornar true se livro for encontrado por ISBN', async () => {
+    await typeormLivroRepository.save(livroDTO);
+    const livroEncontrado = await sut.buscarLivroPorISBN('ISBN_valido');
+
+    expect(livroEncontrado).toBe(true);
+  });
+
+  test('Deve retornar false se livro não for encontrado por ISBN', async () => {
+    const livroEncontrado = await sut.buscarLivroPorISBN('ISBN_valido');
+
+    expect(livroEncontrado).toBe(false);
+  });
 });

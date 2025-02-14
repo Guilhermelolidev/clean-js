@@ -13,7 +13,17 @@ const livrosRepository = function () {
     });
   };
 
-  return { cadastrar };
+  const buscarLivroPorISBN = async ISBN => {
+    const livro = await typeormLivroRepository.count({
+      where: {
+        ISBN,
+      },
+    });
+
+    return !!livro;
+  };
+
+  return { cadastrar, buscarLivroPorISBN };
 };
 
 module.exports = { typeormLivroRepository, livrosRepository };
