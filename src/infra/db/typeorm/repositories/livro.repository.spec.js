@@ -57,4 +57,10 @@ describe('Livro Repository', () => {
     expect(livroEncontrado[0].id).toBeDefined();
     expect(livroEncontrado[0].ISBN).toBe('ISBN_valido');
   });
+
+  test('Deve retornar vazio se nenhum livro for encontrado', async () => {
+    const livroEncontrado = await sut.buscarLivroPorNomeOuISBN('ISBN_valido');
+
+    expect(livroEncontrado).toHaveLength(0);
+  });
 });
