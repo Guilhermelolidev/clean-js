@@ -44,4 +44,20 @@ describe('Usuarios Repository', function () {
     const buscarPorCPFCadastrado = await sut.buscarPorCPF('CPF_valido');
     expect(buscarPorCPFCadastrado).toBe(true);
   });
+
+  test('Deve retornar false se o usuario não for encontrado por CPF', async () => {
+    const buscarPorCPFCadastrado = await sut.buscarPorCPF('CPF_valido');
+    expect(buscarPorCPFCadastrado).toBe(false);
+  });
+
+  test('Deve retornar true se o usuario for encontrado por Email', async () => {
+    await typeormUsuariosRepository.save(usuarioDTO);
+    const buscarPorCPFCadastrado = await sut.buscarPorEmail('email_valido');
+    expect(buscarPorCPFCadastrado).toBe(true);
+  });
+
+  test('Deve retornar false se o usuario não for encontrado por Email', async () => {
+    const buscarPorCPFCadastrado = await sut.buscarPorEmail('CPF_valido');
+    expect(buscarPorCPFCadastrado).toBe(false);
+  });
 });
