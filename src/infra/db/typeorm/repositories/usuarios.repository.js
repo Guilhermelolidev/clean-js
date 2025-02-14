@@ -29,7 +29,17 @@ const usuariosRepository = function () {
     return usuario;
   };
 
-  return { cadastrar, buscarUsuarioPorCPF };
+  const buscarPorCPF = async function (CPF) {
+    const usuario = await typeormUsuariosRepository.findOne({
+      where: {
+        CPF,
+      },
+    });
+
+    return !!usuario;
+  };
+
+  return { cadastrar, buscarUsuarioPorCPF, buscarPorCPF };
 };
 
 module.exports = { usuariosRepository, typeormUsuariosRepository };
