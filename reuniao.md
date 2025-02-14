@@ -42,7 +42,7 @@ retorno mais antiga
 [x] cadastrar: ({ nome_completo, CPF, telefone, endereco, email }) => Promise<void>
 [x] buscarUsuarioPorCPF(CPF) => Promise<usuario | null>
 [x] buscarPorCPF(CPF) => Promise<boolean>
-[] buscarPorEmail(email) => Promise<boolean>
+[x] buscarPorEmail(email) => Promise<boolean>
 
 <!-- Livros Repository -->
 
