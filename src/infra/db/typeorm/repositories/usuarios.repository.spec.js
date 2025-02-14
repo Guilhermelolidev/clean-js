@@ -5,6 +5,7 @@ const {
 
 describe('Usuarios Repository', function () {
   let sut;
+
   beforeEach(async function () {
     await typeormUsuariosRepository.delete({});
   });
