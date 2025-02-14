@@ -23,7 +23,14 @@ const livrosRepository = function () {
     return !!livro;
   };
 
-  return { cadastrar, buscarLivroPorISBN };
+  const buscarLivroPorNomeOuISBN = async valor => {
+    const livros = await typeormLivroRepository.find({
+      where: [{ nome: valor }, { ISBN: valor }],
+    });
+
+    return livros;
+  };
+  return { cadastrar, buscarLivroPorISBN, buscarLivroPorNomeOuISBN };
 };
 
 module.exports = { typeormLivroRepository, livrosRepository };

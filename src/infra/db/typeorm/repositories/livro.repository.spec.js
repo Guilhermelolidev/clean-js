@@ -39,4 +39,22 @@ describe('Livro Repository', () => {
 
     expect(livroEncontrado).toBe(false);
   });
+
+  test('Deve retornar um array de livros se os livros forem encontrados por Nome', async () => {
+    await typeormLivroRepository.save(livroDTO);
+    const livroEncontrado = await sut.buscarLivroPorNomeOuISBN('livro_valido');
+
+    expect(livroEncontrado).toHaveLength(1);
+    expect(livroEncontrado[0].id).toBeDefined();
+    expect(livroEncontrado[0].nome).toBe('livro_valido');
+  });
+
+  test('Deve retornar um array de livros se os livros forem encontrados por ISBN', async () => {
+    await typeormLivroRepository.save(livroDTO);
+    const livroEncontrado = await sut.buscarLivroPorNomeOuISBN('ISBN_valido');
+
+    expect(livroEncontrado).toHaveLength(1);
+    expect(livroEncontrado[0].id).toBeDefined();
+    expect(livroEncontrado[0].ISBN).toBe('ISBN_valido');
+  });
 });
