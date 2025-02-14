@@ -32,7 +32,7 @@ o livro emprestado, cadastrar os livros da nossa biblioteca e poder emprestar os
 [x] Devolver o livro emprestado (sem multa)
 [x] - Caso o usuario tenha atrasado, será gerado uma multa fixa de R$ 10,00
 
-[x] Mostrar todos os empréstimos pendentes, com o nome do livro, nome do usuario, CPF, data de saida, data de retorno. Ordenados pela data de
+[x] Listar todos os empréstimos pendentes, com o nome do livro, nome do usuario, CPF, data de saida, data de retorno. Ordenados pela data de
 retorno mais antiga
 
 <!-- Estruturas -->
