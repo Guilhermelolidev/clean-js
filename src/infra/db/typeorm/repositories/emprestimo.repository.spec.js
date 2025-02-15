@@ -111,4 +111,24 @@ describe('Emprestimo Repository', () => {
     expect(emprestimosPendentes[0].usuario.nome_completo).toBe('nome_valido');
     expect(emprestimosPendentes[0].livro.nome).toBe('livro_valido');
   });
+
+  test('Deve retornar true se existir um emprestimo pendente para o usuario e o livro', async () => {
+    const usuario = await typeormUsuariosRepository.save(usuarioDTO);
+    const livro = await typeormLivroRepository.save(livroDTO);
+
+    await typeormEmprestimoRepository.save({
+      usuario_id: usuario.id,
+      livro_id: livro.id,
+      data_retorno: '2025-03-11',
+      data_saida: '2025-03-11',
+    });
+
+    const existeEmprestimoPendenteLivroUsuario =
+      await sut.verificaSeUsuarioJaAlugouOlivro({
+        usuario_id: usuario.id,
+        livro_id: livro.id,
+      });
+
+    expect(existeEmprestimoPendenteLivroUsuario).toBe(true);
+  });
 });

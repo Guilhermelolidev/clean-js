@@ -54,7 +54,27 @@ const emprestimosRepository = function () {
     return emprestimosPendentes;
   };
 
-  return { emprestar, devolver, buscarPendentesComLivroComUsuario };
+  const verificaSeUsuarioJaAlugouOlivro = async function ({
+    usuario_id,
+    livro_id,
+  }) {
+    const emprestimoLivro = await typeormEmprestimoRepository.count({
+      where: {
+        data_devolucao: IsNull(),
+        livro_id,
+        usuario_id,
+      },
+    });
+
+    return emprestimoLivro === 0 ? false : true;
+  };
+
+  return {
+    emprestar,
+    devolver,
+    buscarPendentesComLivroComUsuario,
+    verificaSeUsuarioJaAlugouOlivro,
+  };
 };
 
 module.exports = { typeormEmprestimoRepository, emprestimosRepository };
