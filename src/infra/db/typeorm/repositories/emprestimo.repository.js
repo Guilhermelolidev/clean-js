@@ -69,6 +69,15 @@ const emprestimosRepository = function () {
     return emprestimoLivro === 0 ? false : true;
   };
 
+  //   const buscarEmprestimoComLivroEUsuarioPorID = async function (id) {
+  //     const emprestimo = await typeormEmprestimoRepository.findOneBy({
+  //       where: {
+  //         id,
+  //       },
+  //     });
+
+  //   };
+
   return {
     emprestar,
     devolver,
