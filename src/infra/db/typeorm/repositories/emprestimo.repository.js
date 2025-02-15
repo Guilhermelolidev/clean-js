@@ -69,20 +69,36 @@ const emprestimosRepository = function () {
     return emprestimoLivro === 0 ? false : true;
   };
 
-  //   const buscarEmprestimoComLivroEUsuarioPorID = async function (id) {
-  //     const emprestimo = await typeormEmprestimoRepository.findOneBy({
-  //       where: {
-  //         id,
-  //       },
-  //     });
+  const buscarEmprestimoComLivroEUsuarioPorID = async function (id) {
+    const emprestimo = await typeormEmprestimoRepository.findOne({
+      where: {
+        id,
+      },
+      relations: ['usuario', 'livro'],
+      select: {
+        id: true,
+        data_saida: true,
+        data_retorno: true,
+        usuario: {
+          nome_completo: true,
+          CPF: true,
+          email: true,
+        },
+        livro: {
+          nome: true,
+        },
+      },
+    });
 
-  //   };
+    return emprestimo;
+  };
 
   return {
     emprestar,
     devolver,
     buscarPendentesComLivroComUsuario,
     verificaSeUsuarioJaAlugouOlivro,
+    buscarEmprestimoComLivroEUsuarioPorID,
   };
 };
 
