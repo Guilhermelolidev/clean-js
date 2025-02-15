@@ -10,6 +10,8 @@ describe('Emprestimo Repository', () => {
 
   beforeEach(async function () {
     await typeormEmprestimoRepository.delete({});
+    await typeormUsuariosRepository.delete({});
+    await typeormLivroRepository.delete({});
   });
 
   beforeAll(function () {
@@ -77,5 +79,36 @@ describe('Emprestimo Repository', () => {
       id: emprestimo.id,
     });
     expect(buscarEmprestimoPorID.data_devolucao).toBe('2025-03-11');
+  });
+
+  test('Deve retornar os emprestimos pendentes', async () => {
+    const usuario = await typeormUsuariosRepository.save(usuarioDTO);
+    const livro = await typeormLivroRepository.save(livroDTO);
+
+    await typeormEmprestimoRepository.save([
+      {
+        usuario_id: usuario.id,
+        livro_id: livro.id,
+        data_retorno: '2025-03-13',
+        data_saida: '2025-03-11',
+        data_devolucao: '2025-03-13',
+      },
+      {
+        usuario_id: usuario.id,
+        livro_id: livro.id,
+        data_retorno: '2025-03-11',
+        data_saida: '2025-03-10',
+      },
+    ]);
+
+    const emprestimosPendentes = await sut.buscarPendentesComLivroComUsuario();
+
+    expect(emprestimosPendentes).toHaveLength(1);
+    expect(emprestimosPendentes[0].id).toBeDefined();
+    expect(emprestimosPendentes[0].data_saida).toBe('2025-03-10');
+    expect(emprestimosPendentes[0].data_retorno).toBe('2025-03-11');
+    expect(emprestimosPendentes[0].data_devolucao).toBeUndefined();
+    expect(emprestimosPendentes[0].usuario.nome_completo).toBe('nome_valido');
+    expect(emprestimosPendentes[0].livro.nome).toBe('livro_valido');
   });
 });
