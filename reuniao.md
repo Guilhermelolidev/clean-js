@@ -55,5 +55,5 @@ retorno mais antiga
 [x] emprestar: ({ usuario_id, livro_id, data_retorno, data_devolucao, data_saida }) => Promise<void>
 [] verificaSeUsuarioJaAlugouOlivro: ({ usuario_id, livro_id }) => Promise<boolean>
 [] buscarEmprestimoComLivroEUsuarioPorID: (id) => Promise<emprestimo & {Livro{nome}, Usuario{nome_completo}, CPF, email}>
-[] devolver: ({ emprestimo_id, data_retorno }) => Promise<{data_retorno}>
+[x] devolver: ({ emprestimo_id, data_retorno }) => Promise<{data_retorno}>
 [] buscarPendentesComLivroComUsuario: () => Promise<emprestimos: { data_saida, data_retorno, & Livro: { Nome }, Usuario: { nome_completo, CPF } }>
