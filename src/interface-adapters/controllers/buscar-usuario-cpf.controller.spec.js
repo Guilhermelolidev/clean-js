@@ -1,9 +1,26 @@
-const { Either } = require('../../shared/errors');
+const { ZodError } = require('zod');
+const { Either, AppError } = require('../../shared/errors');
 const httpResponse = require('../../shared/helpers/http.response');
 const buscarUsuarioPorCPFController = require('./buscar-usuario-cpf.controller');
 
 describe('Buscar usuario por CPF controller', () => {
   const buscarUsuarioPorCPFUseCase = jest.fn();
+
+  test('Deve retornar um throw new app error se as dependencias não forem fornecidas', () => {
+    expect(() => buscarUsuarioPorCPFController({})).rejects.toThrow(
+      new AppError(AppError.dependencias)
+    );
+  });
+
+  test('Deve retornar um erro do zod validator se der erro na validação dos dados', () => {
+    const httpRequest = {
+      params: {},
+    };
+
+    expect(() =>
+      buscarUsuarioPorCPFController({ buscarUsuarioPorCPFUseCase, httpRequest })
+    ).rejects.toBeInstanceOf(ZodError);
+  });
 
   test('Deve retornar um httpResponse 200 e um usuario se o mesmo for encontrado', async function () {
     const usuarioDTO = {

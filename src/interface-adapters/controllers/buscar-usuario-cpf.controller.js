@@ -15,6 +15,8 @@ module.exports = async function buscarUsuarioPorCPFController({
   buscarUsuarioPorCPFUseCase,
   httpRequest,
 }) {
+  if (!buscarUsuarioPorCPFUseCase || !httpRequest || !httpRequest.params)
+    throw new AppError(AppError.dependencias);
   const { CPF } = zodValidator.parse(httpRequest.params);
   const output = await buscarUsuarioPorCPFUseCase({ CPF });
   return output.fold(
