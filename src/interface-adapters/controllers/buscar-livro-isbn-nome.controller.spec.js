@@ -1,4 +1,5 @@
-const { Either } = require('../../shared/errors');
+const { ZodError } = require('zod');
+const { Either, AppError } = require('../../shared/errors');
 const httpResponse = require('../../shared/helpers/http.response');
 const buscarLivroPorISBNOuNomeController = require('./buscar-livro-isbn-nome.controller');
 
@@ -55,5 +56,24 @@ describe('Buscar livro por nome ou ISBN Controller', () => {
       httpRequest.query
     );
     expect(buscarLivroPorISBNOuNomeUseCase).toHaveBeenCalledTimes(1);
+  });
+
+  test('Deve retornar um throw app error se buscarLivroPorISBNOuNomeUseCase e httpRequest não forem fornecidos', () => {
+    expect(() => buscarLivroPorISBNOuNomeController({})).rejects.toThrow(
+      new AppError(AppError.dependencias)
+    );
+  });
+
+  test('Deve retornar um erro do zod validator se der erro na validação dos dados', () => {
+    const httpRequest = {
+      body: {},
+    };
+
+    expect(() =>
+      buscarLivroPorISBNOuNomeController({
+        buscarLivroPorISBNOuNomeUseCase,
+        httpRequest,
+      })
+    ).rejects.toBeInstanceOf(ZodError);
   });
 });
