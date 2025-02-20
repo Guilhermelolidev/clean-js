@@ -1,0 +1,10 @@
+version: '3'
+services:
+  pg:
+    image: 'bitnami/postgresql'
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRESQL_USERNAME=postgresql
+      - POSTGRESQL_PASSWORD=123
+      - POSTGRESQL_DATABASE=biblioteca_test

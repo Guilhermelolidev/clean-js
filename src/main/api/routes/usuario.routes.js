@@ -1,4 +1,4 @@
-const { Router, request } = require('express');
+const { Router } = require('express');
 const cadastrarUsuarioComposer = require('../composer/cadastrar-usuario.composer');
 
 const usuariosRoutes = Router();
