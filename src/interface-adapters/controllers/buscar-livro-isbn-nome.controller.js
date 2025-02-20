@@ -13,12 +13,12 @@ module.exports = async function buscarLivroPorISBNOuNomeController({
   buscarLivroPorISBNOuNomeUseCase,
   httpRequest,
 }) {
-  const valor = zodValidator.parse(httpRequest.query);
+  const { valor } = zodValidator.parse(httpRequest.query);
 
   const output = await buscarLivroPorISBNOuNomeUseCase({ valor });
 
   return output.fold(
-    error => httpResponse(400, error.message), 
+    error => httpResponse(400, error.message),
     livros => httpResponse(200, livros)
   );
 };
