@@ -24,8 +24,9 @@ module.exports = async function emprestarLivroProUsuarioController({
   if (!emprestarLivroProUsuarioUseCase || !httpRequest)
     throw new AppError(AppError.dependencias);
 
-  const { usuario_id, livro_id, data_retorno, data_devolucao, data_saida } =
-    zodValidator.parse(httpRequest.body);
+  const { usuario_id, livro_id, data_retorno, data_saida } = zodValidator.parse(
+    httpRequest.body
+  );
 
   const output = await emprestarLivroProUsuarioUseCase({
     usuario_id,
