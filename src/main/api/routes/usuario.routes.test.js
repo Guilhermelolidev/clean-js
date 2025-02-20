@@ -9,6 +9,20 @@ describe('Usuarios Routes', () => {
     await typeormUsuariosRepository.query('DELETE FROM usuarios');
   });
 
+  test('Deve retonar um erro com os campos obrigatórios ausentes', async function () {
+    const { statusCode, body } = await request(app).post('/usuarios').send({});
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.erros.fieldErrors).toEqual({
+      CPF: ['CPF é obrigatório'],
+      email: ['Email é obrigatório'],
+      endereco: ['Endereço é obrigatório'],
+      nome_completo: ['Nome completo é obrigatório'],
+      telefone: ['Telefone é obrigatório'],
+    });
+  });
+
   test('Deve ser possível cadastrar um usuário', async function () {
     const { statusCode, body } = await request(app).post('/usuarios').send({
       nome_completo: 'nome_completo_valido',
