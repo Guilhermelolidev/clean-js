@@ -35,4 +35,22 @@ describe('Usuarios Routes', () => {
     expect(statusCode).toBe(201);
     expect(body).toBeNull();
   });
+
+  test('Deve retornar um usuário ao buscar pelo CPF', async function () {
+    const usuarioDTO = {
+      nome_completo: 'nome_valido',
+      CPF: '123.123.123-12',
+      endereco: 'endereco_valido',
+      telefone: 'telefone_valido',
+      email: 'email_valido',
+    };
+    await typeormUsuariosRepository.save(usuarioDTO);
+
+    const { statusCode, body } = await request(app).get(
+      '/usuarios/cpf/123.123.123-12'
+    );
+    expect(body.id).toBeDefined();
+    expect(statusCode).toBe(200);
+    expect(body).toEqual(expect.objectContaining(usuarioDTO));
+  });
 });
