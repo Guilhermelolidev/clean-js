@@ -8,7 +8,9 @@ const zodValidator = z.object({
     .string({
       required_error: 'CPF é obrigatório',
     })
-    .refine(value => /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value)),
+    .refine(value => /^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(value), {
+      message: 'CPF inválido',
+    }),
 });
 
 module.exports = async function buscarUsuarioPorCPFController({

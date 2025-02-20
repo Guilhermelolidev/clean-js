@@ -53,4 +53,20 @@ describe('Usuarios Routes', () => {
     expect(statusCode).toBe(200);
     expect(body).toEqual(expect.objectContaining(usuarioDTO));
   });
+
+  test('Deve retornar null se usuario não for encontrado', async function () {
+    const { statusCode, body } = await request(app).get(
+      '/usuarios/cpf/123.123.123-12'
+    );
+    expect(statusCode).toBe(200);
+    expect(body).toBeNull();
+  });
+
+  test('Deve verificar se o CPF foi passado para o params', async function () {
+    const { statusCode, body } = await request(app).get('/usuarios/cpf/1');
+    expect(statusCode).toBe(400);
+    expect(body.erros.fieldErrors).toEqual({
+      CPF: ['CPF inválido'],
+    });
+  });
 });
