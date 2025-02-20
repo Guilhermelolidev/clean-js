@@ -5,6 +5,7 @@ const buscarEmprestimosPendentesController = require('./buscar-emprestimos-pende
 
 describe('Buscar emprestimos pendentes Controller', () => {
   const buscarEmprestimosPendentesUseCase = jest.fn();
+
   test('Deve retornar um httpResponse 200 e os empréstimos pendentes', async () => {
     buscarEmprestimosPendentesUseCase.mockResolvedValue(
       Either.Right(emprestimosPendentesFixture)
