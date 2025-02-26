@@ -16,7 +16,7 @@ const zodValidator = z.object({
   genero: z.string({
     required_error: 'Genero é obrigatório',
   }),
-  ISBN: z.string({
+  ISBN: z.number({
     required_error: 'ISBN é obrigatório',
   }),
 });

@@ -6,7 +6,7 @@ const livrosRoutes = Router();
 
 livrosRoutes.post('/', async (request, response) => {
   const httpRequest = {
-    body: request.bod,
+    body: request.body,
   };
 
   const { statusCode, body } = await cadastrarLivroComposer(httpRequest);
