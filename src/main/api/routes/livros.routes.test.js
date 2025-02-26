@@ -28,6 +28,7 @@ describe('Livros Routes', () => {
     expect(body).toHaveLength(1);
     expect(body[0]).toEqual(expect.objectContaining(livroDTO));
   });
+
   test('Deve ser possível buscar um livro por ISBN', async function () {
     const livroDTO = {
       nome: 'qualquer_nome',
@@ -59,5 +60,14 @@ describe('Livros Routes', () => {
 
     expect(statusCode).toBe(201);
     expect(body).toBeNull();
+  });
+
+  test('Deve retornar um array vazio ao buscar um livro por nome ou ISBN se nada for encontrado', async function () {
+    const { statusCode, body } = await request(app)
+      .get('/livros')
+      .query({ valor: 'qualquer_ISBN' });
+
+    expect(statusCode).toBe(200);
+    expect(body).toHaveLength(0);
   });
 });
