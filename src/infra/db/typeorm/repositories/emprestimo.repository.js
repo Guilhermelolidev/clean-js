@@ -1,5 +1,4 @@
 const { IsNull } = require('typeorm');
-const { id } = require('../../../../../jest.config');
 const { typeormServer } = require('../setup');
 
 const typeormEmprestimoRepository = typeormServer.getRepository('Emprestimo');
