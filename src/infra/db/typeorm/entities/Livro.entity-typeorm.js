@@ -10,7 +10,7 @@ module.exports = new EntitySchema({
       generated: true,
     },
     ISBN: {
-      type: 'int',
+      type: 'varchar',
       unique: true,
     },
     nome: {
