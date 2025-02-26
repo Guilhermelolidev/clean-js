@@ -70,4 +70,26 @@ describe('Livros Routes', () => {
     expect(statusCode).toBe(200);
     expect(body).toHaveLength(0);
   });
+
+  test('Deve retornar um erro se ao cadastrar os campos obrigatórios estiverem ausentes', async function () {
+    const { statusCode, body } = await request(app).post('/livros').send({});
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.erros.fieldErrors).toEqual({
+      nome: ['Nome é obrigatório'],
+      quantidade: ['Quantidade é obrigatório'],
+      autor: ['Autor é obrigatório'],
+      genero: ['Genero é obrigatório'],
+      ISBN: ['ISBN é obrigatório'],
+    });
+  });
+
+  test('Deve retornar um erro se o campo obrigatório valor não for fornecido', async function () {
+    const { statusCode, body } = await request(app).get('/livros');
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.erros.fieldErrors).toEqual({
+      valor: ['Valor é obrigatório'],
+    });
+  });
 });
