@@ -3,9 +3,13 @@ const { app } = require('../app');
 const {
   typeormUsuariosRepository,
 } = require('../../../infra/db/typeorm/repositories/usuarios.repository');
+const {
+  typeormEmprestimoRepository,
+} = require('../../../infra/db/typeorm/repositories/emprestimo.repository');
 
 describe('Usuarios Routes', () => {
   beforeEach(async function () {
+    await typeormEmprestimoRepository.query('DELETE from emprestimos');
     await typeormUsuariosRepository.query('DELETE FROM usuarios');
   });
 

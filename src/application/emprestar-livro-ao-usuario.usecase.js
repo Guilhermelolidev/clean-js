@@ -7,15 +7,9 @@ module.exports = function emprestarLivroProUsuarioUseCase({
   if (!emprestimosRepository || !emailService)
     throw new AppError(AppError.dependencias);
 
-  return async function ({
-    usuario_id,
-    livro_id,
-    data_retorno,
-    data_devolucao,
-    data_saida,
-  }) {
+  return async function ({ usuario_id, livro_id, data_retorno, data_saida }) {
     const parametrosObrigatorios =
-      usuario_id && livro_id && data_retorno && data_devolucao && data_saida;
+      usuario_id && livro_id && data_retorno && data_saida;
     if (!parametrosObrigatorios) {
       throw new AppError(AppError.parametrosObrigatorios);
     }
@@ -34,7 +28,6 @@ module.exports = function emprestarLivroProUsuarioUseCase({
       usuario_id,
       livro_id,
       data_retorno,
-      data_devolucao,
       data_saida,
     });
 
@@ -44,7 +37,7 @@ module.exports = function emprestarLivroProUsuarioUseCase({
     await emailService.enviarEmail({
       data_saida,
       data_retorno,
-      nome_usuario: usuario.nome,
+      nome_usuario: usuario.nome_completo,
       CPF: usuario.CPF,
       email: usuario.email,
       nome_livro: livro.nome,
