@@ -93,7 +93,6 @@ describe('Emprestar livro para o usuário UseCase', function () {
       usuario_id: 'usuario_valido',
       livro_id: 'livro_valido',
       data_retorno: new Date('2025-01-02'),
-      data_devolucao: new Date('2025-01-02'),
       data_saida: new Date('2025-01-01'),
     };
     const sut = emprestarLivroAoUsuarioUsecase({

@@ -33,11 +33,10 @@ module.exports = function emprestarLivroProUsuarioUseCase({
 
     const { usuario, livro } =
       await emprestimosRepository.buscarEmprestimoComLivroEUsuarioPorID(id);
-
     await emailService.enviarEmail({
       data_saida,
       data_retorno,
-      nome_usuario: usuario.nome_completo,
+      nome_usuario: usuario.nome,
       CPF: usuario.CPF,
       email: usuario.email,
       nome_livro: livro.nome,
