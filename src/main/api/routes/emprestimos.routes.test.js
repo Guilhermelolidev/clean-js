@@ -68,4 +68,25 @@ describe('Emprestimos Routes', () => {
     expect(statusCode).toBe(200);
     expect(body).toBe('Multa por atraso R$ 0');
   });
+
+  test('Deve retornar 200 e uma mensagem de multa aplicada', async () => {
+    const livro = await typeormLivroRepository.save(livroDTO);
+    const usuario = await typeormUsuariosRepository.save(usuarioDTO);
+
+    const emprestimo = await typeormEmprestimoRepository.save({
+      livro_id: livro.id,
+      usuario_id: usuario.id,
+      data_saida: '2024-02-15',
+      data_retorno: '2024-02-16',
+    });
+
+    const { statusCode, body } = await request(app)
+      .put(`/emprestimos/devolver/${emprestimo.id}`)
+      .send({
+        data_devolucao: '2024-02-17',
+      });
+
+    expect(statusCode).toBe(200);
+    expect(body).toBe('Multa por atraso R$ 10,00');
+  });
 });
