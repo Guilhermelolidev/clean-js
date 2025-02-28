@@ -9,6 +9,8 @@ module.exports = async function buscarEmprestimosPendentes({
 
   const output = await buscarEmprestimosPendentesUseCase();
 
+  console.log('output', output);
+
   return output.fold(
     error => httpResponse(400, error.message),
     emprestimos => httpResponse(200, emprestimos)

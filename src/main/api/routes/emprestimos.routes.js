@@ -25,7 +25,7 @@ emprestimosRoutes.put('/devolver/:emprestimo_id', async (request, response) => {
 });
 
 emprestimosRoutes.get('/', async (_, response) => {
-  const { statusCode, body } = buscarEmprestimosPendentesComposer();
+  const { statusCode, body } = await buscarEmprestimosPendentesComposer();
   return response.status(statusCode).json(body);
 });
 
