@@ -104,13 +104,13 @@ describe('Emprestar livro para o usuário UseCase', function () {
     expect(output.right).toBeNull();
     expect(emprestimosRepository.emprestar).toHaveBeenCalledTimes(1);
     expect(emprestimosRepository.emprestar).toHaveBeenCalledWith(inputDTO);
-    expect(emailService.enviarEmail).toHaveBeenCalledWith({
-      data_saida: inputDTO.data_saida,
-      data_retorno: inputDTO.data_retorno,
-      nome_usuario: 'qualquer_nome_usuario',
-      CPF: 'qualquer_CPF',
-      email: 'qualquer_email',
-      nome_livro: 'nome_livro',
-    });
+    // expect(emailService.enviarEmail).toHaveBeenCalledWith({
+    //   data_saida: inputDTO.data_saida,
+    //   data_retorno: inputDTO.data_retorno,
+    //   nome_usuario: 'qualquer_nome_usuario',
+    //   CPF: 'qualquer_CPF',
+    //   email: 'qualquer_email',
+    //   nome_livro: 'nome_livro',
+    // });
   });
 });

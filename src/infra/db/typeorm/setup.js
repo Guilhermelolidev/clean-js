@@ -1,3 +1,4 @@
+require('dotenv/config');
 const { resolve } = require('path');
 const typeorm = require('typeorm');
 const typeormProd = require('./typeorm.prod');
@@ -15,12 +16,12 @@ if (process.env.NODE_ENV === 'test') {
 } else if (process.env.NODE_ENV === 'integration') {
   typeormServer = new typeorm.DataSource({
     type: 'postgres',
-    host: 'localhost',
-    database: 'biblioteca_test',
+    host: process.env.POSTGRES_HOST,
+    database: process.env.POSTGRES_DATABASE,
     synchronize: true,
-    username: 'postgres',
-    password: '123',
-    port: 5432,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASS,
+    port: process.env.POSTGRES_PORT,
     entities: [resolve(__dirname, 'entities/*.entity-typeorm.js')],
   });
 } else {
